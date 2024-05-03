@@ -1,4 +1,4 @@
-resource "aws_iam_role" "example_role" {
+resource "aws_iam_role" "Jenkins_role" {
   name = "Jenkins-terraform"
   assume_role_policy = <<EOF
 {
@@ -17,13 +17,13 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "example_attachment" {
-  role       = aws_iam_role.example_role.name
+  role       = aws_iam_role.Jenkins_role.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
-resource "aws_iam_instance_profile" "example_profile" {
+resource "aws_iam_instance_profile" "Jenkins_profile" {
   name = "Jenkins-terraform"
-  role = aws_iam_role.example_role.name
+  role = aws_iam_role.Jenkins_role.name
 }
 
 
@@ -59,12 +59,12 @@ resource "aws_security_group" "Jenkins-sg" {
 }
 
 resource "aws_instance" "web" {
-  ami                    = "ami-0df4b2961410d4cff"
-  instance_type          = "t2.medium"
-  key_name               = "purplehaze"
+  ami                    = "ami-05e00961530ae1b55"
+  instance_type          = "t3.large"
+  key_name               = "DevOps_Projects"
   vpc_security_group_ids = [aws_security_group.Jenkins-sg.id]
   user_data              = templatefile("./install_jenkins.sh", {})
-  iam_instance_profile   = aws_iam_instance_profile.example_profile.name
+  iam_instance_profile   = aws_iam_instance_profile.Jenkins_profile.name
 
   tags = {
     Name = "Jenkins-argo"
