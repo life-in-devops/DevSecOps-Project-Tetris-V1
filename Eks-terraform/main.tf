@@ -34,7 +34,7 @@ data "aws_subnets" "public" {
 }
 #cluster provision
 resource "aws_eks_cluster" "example" {
-  name     = "DevSecOps-Project3"
+  name     = "GitOps-Project"
   role_arn = aws_iam_role.example.arn
 
   vpc_config {
@@ -81,7 +81,7 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEC2ContainerRegistryRea
 #create node group
 resource "aws_eks_node_group" "example" {
   cluster_name    = aws_eks_cluster.example.name
-  node_group_name = "DevSecOps-Project2-node-group"
+  node_group_name = "GitOps-Project-node-group"
   node_role_arn   = aws_iam_role.example1.arn
   subnet_ids      = data.aws_subnets.public.ids
 
