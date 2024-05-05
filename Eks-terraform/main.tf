@@ -34,7 +34,7 @@ data "aws_subnets" "public" {
 }
 #cluster provision
 resource "aws_eks_cluster" "example" {
-  name     = "DevSecOps-Project2"
+  name     = "DevSecOps-Project3"
   role_arn = aws_iam_role.example.arn
 
   vpc_config {
@@ -86,8 +86,8 @@ resource "aws_eks_node_group" "example" {
   subnet_ids      = data.aws_subnets.public.ids
 
   scaling_config {
-    desired_size = 2
-    max_size     = 3
+    desired_size = 1
+    max_size     = 2
     min_size     = 1
   }
   instance_types = ["t3.medium"]
